@@ -2,7 +2,7 @@ import type { Serverless } from 'serverless/aws';
 
 const serverlessConfiguration: Serverless = {
   service: {
-    name: 'shop-info-service',
+    name: 'shop-info-service-dev',
     // app and org for use with dashboard.serverless.com
     // app: your-app-name,
     // org: your-org-name,
@@ -20,6 +20,7 @@ const serverlessConfiguration: Serverless = {
     name: 'aws',
     runtime: 'nodejs12.x',
     region: 'eu-west-1',
+    stage: 'dev',
     apiGateway: {
       minimumCompressionSize: 1024,
     },
