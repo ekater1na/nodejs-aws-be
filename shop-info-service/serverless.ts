@@ -28,18 +28,31 @@ const serverlessConfiguration: Serverless = {
     },
   },
   functions: {
-    hello: {
-      handler: 'handler.hello',
+    getShopInfo: {
+      handler: 'handler.getShopInfo',
       events: [
         {
           http: {
             method: 'get',
-            path: 'hello',
+            path: 'shop-info',
+            cors: true,
+          }
+        }
+      ]
+    },
+    getShopAdminInfo: {
+      handler: 'handler.getShopAdminInfo',
+      events: [
+        {
+          http: {
+            method: 'get',
+            path: 'shop-admin-info',
+            cors: true,
           }
         }
       ]
     }
-  }
+}
 }
 
-module.exports = serverlessConfiguration;
+module.exports = serverlessConfiguration
