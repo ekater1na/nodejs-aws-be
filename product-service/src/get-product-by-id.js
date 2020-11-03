@@ -19,5 +19,3 @@ export const getProductById = async (event) => {
     return getResponseObject(500, { error: 'Error getting product' });
   }
 };
-
-
