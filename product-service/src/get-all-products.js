@@ -1,21 +1,17 @@
-import productList from './productList.json';
+const AWS = require('aws-sdk');
+const docClient = new AWS.DynamoDB.DocumentClient({region: 'eu-west-1'});
 
-export const getAllProducts = async (event) => {
-  try {
-    const {
-      pathParameters: { id },
-    } = event;
-    const products = await getProducts();
-    const productById = products.find(p => p.id === id);
-
-    if (!productById) {
-      return getResponseObject(404, {
-        error: `Product not found with id: ${id}`,
-      });
+exports.handler = function (callback) {
+    
+    let scanningParams = {
+        TableName : 'rss-robots'
     }
-
-    return getResponseObject(200, { data: productById });
-  } catch (e) {
-    return getResponseObject(500, { error: 'Error getting product' });
+    
+    docClient.scan(scanningParams, function(err, data){
+        if (err) {
+            callback(err, null);
+        } else {
+            callback(null, data.Items)
+        }
+    })
   }
-};
