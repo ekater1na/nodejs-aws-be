@@ -1,14 +1,23 @@
 import productList from './productList.json';
 
 export const getProductById = async (event) => {
-  console.log('Lambda invocation with event: ', event);
-  // const { productId } = event ....
+  try {
+    const {
+      pathParameters: { id },
+    } = event;
+    const products = await getProducts();
+    const productById = products.find(p => p.id === id);
 
-  // Some logic ...
-  // Don't forget about logging and testing
+    if (!productById) {
+      return getResponseObject(404, {
+        error: `Product not found with id: ${id}`,
+      });
+    }
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify(productList[0])
-  };
+    return getResponseObject(200, { data: productById });
+  } catch (e) {
+    return getResponseObject(500, { error: 'Error getting product' });
+  }
 };
+
+
